@@ -13,7 +13,13 @@ db.on('error',console.error.bind(console,'connection error'));
 let Person = mongoose.model('Person',personSchema);
 
 
-
+function handleErrors(err,res,done){
+  if(err) {
+    done(err);
+  } else {
+    done(null,res);
+  }
+}
 
 const createAndSavePerson = (done) => {
   const testPerson = new Person({
@@ -58,7 +64,9 @@ const findPeopleByName = (personName, done) => {
 };
 
 const findOneByFood = (food, done) => {
-  done(null /*, data*/);
+  Person.findOne({favoriteFoods : {$all: [food]}}, (err,res) => {
+    handleErrors(err,res,done);
+  });
 };
 
 const findPersonById = (personId, done) => {
