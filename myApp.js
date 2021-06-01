@@ -70,7 +70,7 @@ const findOneByFood = (food, done) => {
 };
 
 const findPersonById = (personId, done) => {
-  Person.find(personId, (err,res) => {
+  Person.findById(personId, (err,res) => {
     handleErrors(err,res,done);
   });
 };
