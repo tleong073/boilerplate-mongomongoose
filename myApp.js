@@ -1,8 +1,19 @@
 require('dotenv').config();
 const mongoose = require('mongoose');
+const db = mongoose.connection;
+const personSchema = require('./schemas/PersonSchema.js');
 
-mongoose.connect(process.env.MONGO_URL,{useNewUrlParser: true, useUnifiedTopology: true});
-let Person;
+const tmp = 'mongodb+srv://user:9GPz6qNqKXyLAtfT@cluster0.dssak.mongodb.net/freecodecamp?retryWrites=true&w=majority'
+// Check for connection error
+
+
+
+mongoose.connect(process.env.MONGO_URL || tmp,{useNewUrlParser: true, useUnifiedTopology: true});
+db.on('error',console.error.bind(console,'connection error'));
+let Person = mongoose.model('Person',personSchema);
+
+// const testPerson = new Person({name: 'robert'});
+
 
 const createAndSavePerson = (done) => {
   done(null /*, data*/);
