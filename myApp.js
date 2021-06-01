@@ -12,11 +12,25 @@ mongoose.connect(process.env.MONGO_URL || tmp,{useNewUrlParser: true, useUnified
 db.on('error',console.error.bind(console,'connection error'));
 let Person = mongoose.model('Person',personSchema);
 
-// const testPerson = new Person({name: 'robert'});
+
 
 
 const createAndSavePerson = (done) => {
-  done(null /*, data*/);
+  const testPerson = new Person({
+    name: "Bob",
+    age: 34,
+    favoriteFoods: ['ice cream','seafood','burger']
+  });
+  testPerson.save((err,data) => {
+    if(err) {
+      console.log(err);
+      done(err);
+    }
+    else {
+      console.log(data);
+      done(null,data);
+    }
+  });
 };
 
 const createManyPeople = (arrayOfPeople, done) => {
